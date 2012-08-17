@@ -738,6 +738,29 @@ used instead of `browse-url-new-window-flag'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; surround-with-tags
+
+(defun surround-with-tags (start end tagname)
+  "Surround region with <tag>...</tag>. When called interactively, the tag name is queried in the minibuffer."
+  (interactive "r
+sTag Name: ")
+  (let
+      ((start-marker (make-marker))
+       (end-marker (make-marker)))
+    (set-marker start-marker start)
+    (set-marker end-marker end)
+    (save-excursion
+      (goto-char (marker-position start-marker))
+      (insert (concat "<" tagname ">"))
+      (goto-char (marker-position end-marker))
+      (insert (concat "</" tagname ">")))
+    (set-marker start-marker nil)
+    (set-marker end-marker nil)))
+
+;; surround-with-tags ENDE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; re-simple-search-(initial-)?(forward|backward)
 ;;
 ;; Einfache (nicht-inkrementelle) regexp-Textsuchfunktionen wie in Windoze-Editoren
