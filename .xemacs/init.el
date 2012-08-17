@@ -744,18 +744,32 @@ used instead of `browse-url-new-window-flag'."
   "Surround region with <tag>...</tag>. When called interactively, the tag name is queried in the minibuffer."
   (interactive "r
 sTag Name: ")
-  (let
-      ((start-marker (make-marker))
+  (let*
+      ((is-block
+        (and (= 0 (column-number-at-pos start))
+             (= 0 (column-number-at-pos start))
+             (/= (line-number-at-pos start) (line-number-at-pos end))))
+       (start-marker (make-marker))
        (end-marker (make-marker)))
     (set-marker start-marker start)
     (set-marker end-marker end)
     (save-excursion
       (goto-char (marker-position start-marker))
       (insert (concat "<" tagname ">"))
+      (and is-block (newline))
       (goto-char (marker-position end-marker))
-      (insert (concat "</" tagname ">")))
+      (insert (concat "</" tagname ">"))
+      (and is-block (newline)))
     (set-marker start-marker nil)
     (set-marker end-marker nil)))
+
+(defun column-number-at-pos (&optional pos)
+  "Return (narrowed) buffer column number at position POS.
+If POS is nil, use current buffer location."
+  (let ((opoint (or pos (point))) start)
+    (save-excursion
+      (goto-char opoint)
+      (current-column))))
 
 ;; surround-with-tags ENDE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
