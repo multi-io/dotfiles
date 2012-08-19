@@ -174,7 +174,7 @@
 
 ;; gtags (Emacs-Interface zu global(1))
 (initialize-lib
- "gtags" '()
+ "gtags" '("/usr/share/emacs/site-lisp/global")
 
  (load-library "gtags")
  ;; gtags-pop-stack so umdefinieren, dass der verlassene Buffer
