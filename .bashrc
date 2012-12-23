@@ -13,13 +13,6 @@ if [ "$PS1" ]; then
 # don't put duplicate lines in the history. See bash(1) for more options
 # export HISTCONTROL=ignoredups
 
-# enable color support of ls and also add handy aliases
-export LS_OPTIONS='--color=auto'
-eval `dircolors -b`
-alias ls='ls $LS_OPTIONS'
-alias dir='ls --color=auto --format=vertical'
-alias vdir='ls --color=auto --format=long'
-
 # some more ls aliases
 alias ll='ls -l'
 alias la='ls -A'
