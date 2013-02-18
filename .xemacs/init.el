@@ -471,6 +471,16 @@ used instead of `browse-url-new-window-flag'."
             (setq sgml-indent-data t)))
 
 
+;;======markdown=========
+
+(initialize-lib
+ "markdown" '()
+ 
+ (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
+
+ (setq auto-mode-alist
+       (cons '("\\.md" . markdown-mode) auto-mode-alist)))
+
 
 
 ;;;;======OO-Browser=========
