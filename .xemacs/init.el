@@ -49,6 +49,14 @@
          ,@body))))
 
 
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (unless (package-installed-p 'inf-ruby)
+    (package-install 'inf-ruby)))
+
+
 ;my own stuff overrides everything
 (append-path-if-exists (expand-file-name "~/emacs-lisp")
                        load-path)
