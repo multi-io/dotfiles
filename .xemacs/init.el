@@ -239,10 +239,10 @@
 (initialize-lib
  "ruby" '()
 
- (load-library "inf-ruby")
- (add-hook 'ruby-mode-hook
-           '(lambda ()
-              (inf-ruby-keys)))
+ ;; (load-library "inf-ruby")
+ ;; (add-hook 'ruby-mode-hook
+ ;;           '(lambda ()
+ ;;              (inf-ruby-keys)))
 
  (defun ruby-mode-setup ()
    (setq indent-tabs-mode nil)
@@ -251,7 +251,8 @@
  (add-hook 'ruby-mode-hook 'ruby-mode-setup)
 
  (load-library "rubydb3x")
- (require 'rubydb))
+ (require 'rubydb)
+ )
 
 
 (initialize-lib
