@@ -150,9 +150,11 @@
 
 ;; on OSX, use alt-up/down for paragraph forward/backward
 ;; because ctrl-up/down is used by Expose
-(if (string-match "darwin" system-configuration)
-    (global-set-key [(meta up)] 'backward-paragraph)
-    (global-set-key [(meta down)] 'forward-paragraph))
+(when (string-match "darwin" system-configuration)
+  (global-set-key [(meta up)] 'backward-paragraph)
+  (global-set-key [(meta down)] 'forward-paragraph)
+  (global-set-key [(control help)] 'ns-copy-including-secondary)
+  (global-set-key [(shift help)] 'yank))
 
 ;; avoid mysterious "iso-level3-shift not defined" error when pressing AltGr
 ;; see http://groups.google.com/groups?hl=en&lr=&threadm=bu3v5r%24g66%241%40knot.queensu.ca&rnum=4&prev=/groups%3Fas_q%3D%2522iso-level3-shift%2520not%2520defined%2522%26safe%3Dimages%26lr%3D%26hl%3Den
