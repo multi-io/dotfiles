@@ -49,3 +49,8 @@ PATH="$oldpath"
 
 # don't create core files
 ulimit -c 0
+
+if [ -d "$HOME/.rbenv" ]; then
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+fi
