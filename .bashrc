@@ -56,10 +56,6 @@ if [ -f ~/openrc ]; then
     . ~/openrc
 fi
 
-# run site-specific stuff
-for f in `generate-site-specific-filenames .bashrc.`; do
-  . "$f"
-done
 
 PATH="$oldpath"
 
@@ -76,3 +72,8 @@ if [ -d "$HOME/perl5/bin" ]; then
     PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
     PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 fi
+
+# run site-specific stuff
+for f in `generate-site-specific-filenames .bashrc.`; do
+  . "$f"
+done
