@@ -51,6 +51,11 @@ if [ -x "$(which virtualenv)" ]; then
     export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 fi
 
+
+if [ -f ~/openrc ]; then
+    . ~/openrc
+fi
+
 # run site-specific stuff
 for f in `generate-site-specific-filenames .bashrc.`; do
   . "$f"
