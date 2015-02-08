@@ -70,3 +70,9 @@ if [ -d "$HOME/.rbenv" ]; then
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
 fi
+
+if [ -d "$HOME/perl5/bin" ]; then
+    export PATH="$HOME/perl5/bin:$PATH"
+    PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
+    PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+fi
