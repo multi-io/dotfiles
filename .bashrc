@@ -67,10 +67,16 @@ if [ -d "$HOME/.rbenv" ]; then
     eval "$(rbenv init -)"
 fi
 
-if [ -d "$HOME/perl5/bin" ]; then
-    export PATH="$HOME/perl5/bin:$PATH"
-    PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
-    PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+if [ "$SHLVL" = "1" ]; then
+    if perl -e 'use local::lib' >/dev/null 2>&1 || perl "-I$HOME/perl5/lib/perl5" -e 'use local::lib' >/dev/null 2>&1 ; then
+        eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"  # TODO not whitespace safe
+    else
+        echo 'please install perl local::lib (https://metacpan.org/pod/local::lib)'
+        export PATH="$HOME/perl5/bin:$PATH"
+        PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
+        PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+        export PERLLIB="$HOME/perl5/lib/perl5:$PERLLIB"
+    fi
 fi
 
 # run site-specific stuff
