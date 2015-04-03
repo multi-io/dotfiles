@@ -79,6 +79,31 @@ if [ "$SHLVL" = "1" ]; then
     fi
 fi
 
+jdk_switch() {
+    if [ -z "$1" ]; then
+        echo "usage: jdk_switch <java home directory name>" >&2;
+        return;
+    fi
+
+    jh="$1"
+    if [ ! -d "$jh" -o ! -x "$jh/bin/java" ]; then
+        jh="/usr/local/$jh"
+    fi
+
+    if [ ! -d "$jh" -o ! -x "$jh/bin/java" ]; then
+        echo "java home directory not found: $jh" >&2;
+        return;
+    fi
+
+    echo "switching JAVA_HOME to $jh" >&2
+    # try to remove the current $JAVA_HOME from $PATH
+    if [ -x /usr/bin/ruby ]; then  # need to use the native ruby binary, not any rbenv shim, to get an unchanged $PATH in the script
+        PATH=$(/usr/bin/ruby -e "print ENV['PATH'].gsub(\"#{ENV['JAVA_HOME']}/bin:\", '')")
+    fi
+    export JAVA_HOME="$jh"
+    export PATH="$jh/bin:$PATH"
+}
+
 # run site-specific stuff
 for f in `generate-site-specific-filenames .bashrc.`; do
   . "$f"
