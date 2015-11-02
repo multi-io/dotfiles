@@ -10,21 +10,15 @@ fi
 # If running interactively, then:
 if [ "$PS1" ]; then
 
-# don't put duplicate lines in the history. See bash(1) for more options
-# export HISTCONTROL=ignoredups
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # some more ls aliases
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias cvsfhg='cvs -d :ext:otter.isst.fhg.de:/home/oklischa/cvsroot'
-alias cvsintbas='cvs -d :ext:otter.isst.fhg.de:/home/inetbas/repository'
-
 alias jpython='jpython -Dpython.cachedir=/home/olaf/.jpython.d/cachedir'
-
-# TODO: das ist suboptimal -- er sollte selber erkennen, ueber welchen Provider er eingewehlt ist.
-alias wgetfhg='WGETRC=~/.wgetrc.fhg wget'
 
 alias wgetwof='WGETRC=~/.wgetrc.wwwoffle wget'
 
@@ -103,6 +97,8 @@ jdk_switch() {
     export JAVA_HOME="$jh"
     export PATH="$jh/bin:$PATH"
 }
+
+PATH="$HOME/bin:$PATH"
 
 # run site-specific stuff
 for f in `generate-site-specific-filenames .bashrc.`; do

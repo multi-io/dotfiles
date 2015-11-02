@@ -22,9 +22,9 @@ umask 022
 # .bash_profile
 
 # Get the aliases and functions
-if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
-fi
+#if [ -f ~/.bashrc ]; then
+	#. ~/.bashrc
+#fi
 
 if [ -f ~/.profile ]; then
 	. ~/.profile
@@ -32,7 +32,7 @@ fi
 
 # User specific environment and startup programs
 
-export PATH=.:`generate-site-specific-filenames -n $HOME/bin/ | tr ' ' ':'`:$HOME/bin:$PATH:/usr/local/ocs-2.3f.beta/bin
+export PATH=.:`generate-site-specific-filenames -n $HOME/bin/ | tr ' ' ':'`:$HOME/bin:$PATH
 export ENV=$HOME/.bashrc
 #export TEMP=$HOME/temp
 export USERNAME="Olaf Klischat"
