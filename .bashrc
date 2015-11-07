@@ -100,6 +100,8 @@ jdk_switch() {
 
 PATH="$HOME/bin:$PATH"
 
+[[ -f ~/.tmux-session.load ]] && source ~/.tmux-session.load
+
 # run site-specific stuff
 for f in `generate-site-specific-filenames .bashrc.`; do
   . "$f"
