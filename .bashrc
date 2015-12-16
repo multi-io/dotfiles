@@ -102,6 +102,8 @@ PATH="$HOME/bin:$PATH"
 
 [[ -f ~/.tmux-session.load ]] && source ~/.tmux-session.load
 
+[[ -n "$(type -p brew)" && -f $(brew --prefix)/etc/bash_completion ]] && . $(brew --prefix)/etc/bash_completion
+
 # run site-specific stuff
 for f in `generate-site-specific-filenames .bashrc.`; do
   . "$f"
