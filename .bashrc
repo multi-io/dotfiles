@@ -2,6 +2,11 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+if [ -n "$_BASHRC_RAN" ]; then
+    return
+fi
+_BASHRC_RAN=1
+
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
