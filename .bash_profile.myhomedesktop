@@ -1,0 +1,4 @@
+# export HTTP_PROXY='http://tick:8080'
+export LM_LICENSE_FILE=/home/olaf/lib/modelsim/license.dat
+export PATH=$PATH:/usr/local/modelsim/modeltech/bin:/usr/local/ocs-2.3f.beta/bin
+# export SANE_DEFAULT_DEVICE='net:localhost:mustek_pp'

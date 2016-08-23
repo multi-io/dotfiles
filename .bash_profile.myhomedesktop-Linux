@@ -1,0 +1,4 @@
+# -*- shell-script -*-
+
+SPICECAD_HELPDIR=/usr/local/spicecad
+JAC_HOME=/usr/local/jacorb

@@ -1,0 +1,2 @@
+alias cvsfhg='cvs -d /home/olaf_isstunix/cvsroot'
+alias cvsintbas='cvs -d /home/olaf_isstunix/cvsroot'

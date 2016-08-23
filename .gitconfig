@@ -1,0 +1,21 @@
+[user]
+	name = Olaf Klischat
+	email = olaf.klischat@gmail.com
+[core]
+	pager = cat
+	autocrlf = false
+[color]
+	ui = auto
+[alias]
+    loggraph = "!f() { echo 'digraph git {\n  node  [shape="record"];' ; git log --pretty='%h@@@@@%ci@@@@@%s' \"$@\" | ruby -ne 'h,ci,s = $_.split(\"@@@@@\"); s = s[0...32].chomp.gsub(\">\"){\"_\"}.gsub(\"<\"){\"_\"}.gsub(%q@\"@){\"_\"}; puts %Q@  \"#{h}\"[label=\"{#{ci}|#{s}}\"]@'; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f | dotty /dev/stdin"
+	lol = git log --pretty=oneline --abbrev-commit --graph --decorate
+	lol = log --pretty=oneline --abbrev-commit --graph --decorate
+[merge]
+	renameLimit = 99999
+[http]
+	postBuffer = 524288000
+[sendemail]
+	smtpencryption = tls
+	smtpserver = smtp.gmail.com
+	smtpuser = olaf.klischat@gmail.com
+	smtpserverport = 587

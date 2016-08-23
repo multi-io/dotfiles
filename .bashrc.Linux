@@ -1,0 +1,7 @@
+if [ -f ~/.bashrc.ubuntu ]; then
+    . ~/.bashrc.ubuntu
+fi
+
+# enable color support of ls and also add handy aliases
+export LS_OPTIONS='--color=auto'
+alias ls='ls $LS_OPTIONS'

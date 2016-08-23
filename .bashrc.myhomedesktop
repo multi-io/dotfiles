@@ -1,0 +1,2 @@
+alias cvsfhg='cvs -d :ext:otter.isst.fhg.de:/home/oklischa/cvsroot'
+alias cvsintbas='cvs -d :ext:otter.isst.fhg.de:/home/inetbas/repository'

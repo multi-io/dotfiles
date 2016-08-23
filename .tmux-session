@@ -1,0 +1,11 @@
+#!/bin/bash
+# Reattach to (or spawn new if does not exist)
+# tmux session "$1"
+
+export STY="tmux-$1"
+if tmux has-session -t "$1" 2>/dev/null ; then
+  exec tmux attach-session -t "$1"
+else
+  exec tmux new-session -s "$1"
+fi
+
