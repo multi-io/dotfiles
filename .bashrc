@@ -8,6 +8,16 @@ case $- in
       *) return;;
 esac
 
+if [ -n "$_BASHRC_RAN" ]; then
+    return
+fi
+_BASHRC_RAN=1
+
+# Source global /etc/bashrc if present. Mainly for b/w compat. /etc/bash.bashrc (if present) is already executed automatically.
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
