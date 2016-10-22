@@ -1,3 +1,7 @@
 *~
 *.cpy
 *.old
+/bin
+/doc
+/utils
+/.cache
