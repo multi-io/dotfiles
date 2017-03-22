@@ -82,6 +82,7 @@ export wind_common_resources=$HOME/workspace/wind3-resources
 export project_common_resources=$HOME/workspace/wind3-resources
 
 export LANG=en_US.UTF-8
+export LC_CTYPE=$LANG    # in some environments (e.g. OSX?), for some reason, LC_CTYPE gets set to just UTF-8, which is broken
 
 #if [ -e /usr/bin/xmms2-launcher ]; then
 #  /usr/bin/xmms2-launcher
