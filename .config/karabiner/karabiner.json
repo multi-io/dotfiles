@@ -58,7 +58,7 @@
                 },
                 "rules": [
                     {
-                        "description": "ctrl-fn -> copy (Command-C)",
+                        "description": "ctrl-fn/del -> cut/copy/paste",
                         "manipulators": [
                             {
                                 "from": {
@@ -91,6 +91,25 @@
                                 "to": [
                                     {
                                         "key_code": "v",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "delete_or_backspace",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "x",
                                         "modifiers": [
                                             "left_command"
                                         ]
