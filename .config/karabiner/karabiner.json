@@ -24,6 +24,53 @@
             "name": "Default profile",
             "selected": true,
             "simple_modifications": {},
+            "complex_modification": {
+                "rules": [
+                    {
+                        "conditions": [],
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "fn",
+                                    "modifiers": [
+                                        "control",
+                                        "fn"
+                                    ]
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "c",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "fn",
+                                    "modifiers": [
+                                        "shift",
+                                        "fn"
+                                    ]
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "v",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "parameters": {
+                }
+            },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "keyboard_type": "ansi"
