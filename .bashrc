@@ -172,6 +172,12 @@ if [ "$SHLVL" = "1" ]; then
     fi
 fi
 
+if [[ -n "$(type -p go)" && -d ~/gopath ]]; then
+    export GOPATH=~/gopath;
+    #[[ "$SHLVL" = "1" ]] && export PATH="$GOPATH/bin:$PATH"
+fi
+
+    
 jdk_switch() {
     if [ -z "$1" ]; then
         echo "usage: jdk_switch <java home directory name>" >&2;
