@@ -172,8 +172,8 @@ if [ "$SHLVL" = "1" ]; then
     fi
 fi
 
-if [[ -n "$(type -p go)" && -d ~/gopath ]]; then
-    export GOPATH=~/gopath;
+if [[ -n "$(type -p go)" && -d ~/go ]]; then
+    export GOPATH=~/go;
     #[[ "$SHLVL" = "1" ]] && export PATH="$GOPATH/bin:$PATH"
 fi
 
