@@ -159,8 +159,21 @@ ulimit -c 0
 
 if [ -d "$HOME/.rbenv" ]; then
     export PATH="$HOME/.rbenv/bin:$PATH"
+fi
+
+if command -v rbenv >/dev/null ; then
     eval "$(rbenv init -)"
 fi
+
+if [ -d "$HOME/.pyenv" ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+fi
+
+if command -v pyenv >/dev/null ; then
+    eval "$(pyenv init -)"
+fi
+
 
 if [ "$SHLVL" = "1" ]; then
     if perl -e 'use local::lib' >/dev/null 2>&1 || perl "-I$HOME/perl5/lib/perl5" -e 'use local::lib' >/dev/null 2>&1 ; then
