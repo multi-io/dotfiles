@@ -35,6 +35,8 @@ alias wgetwof='WGETRC=~/.wgetrc.wwwoffle wget'
 
 alias wofcache='WGETRC=~/.wgetrc.wwwoffle wget -r -L -nd --delete-after'
 
+alias skopeo='docker run --rm luebken/skopeo skopeo'
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
