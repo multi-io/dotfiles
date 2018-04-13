@@ -171,7 +171,12 @@ if [ -d "$HOME/.pyenv" ]; then
 fi
 
 if command -v pyenv >/dev/null ; then
+
     eval "$(pyenv init -)"
+
+    if pyenv virtualenv --help >/dev/null 2>&1; then
+        eval "$(pyenv virtualenv-init -)"
+    fi
 fi
 
 
