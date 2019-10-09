@@ -68,11 +68,21 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git kube-ps1)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+
+PROMPT=$PROMPT'$(kube_ps1) '
+
+## make Ctrl-W delete some additional characters as well
+my-backward-delete-word() {
+    local WORDCHARS="${WORDCHARS}-,.;'<>:\"[]{}-=_+!$%^&*()";
+    zle backward-delete-word;
+}
+zle -N my-backward-delete-word
+bindkey '^W' my-backward-delete-word
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
