@@ -84,11 +84,18 @@ export project_common_resources=$HOME/workspace/wind3-resources
 export LANG=en_US.UTF-8
 export LC_CTYPE=$LANG    # in some environments (e.g. OSX?), for some reason, LC_CTYPE gets set to just UTF-8, which is broken
 
+_krewroot="${KREW_ROOT:-$HOME/.krew}"
+if [[ -n "$_krewroot" ]]; then
+    export PATH="${_krewroot}/bin:$PATH"
+fi
+unset _krewroot
+    
+
 #if [ -e /usr/bin/xmms2-launcher ]; then
 #  /usr/bin/xmms2-launcher
 #fi
 
 # run site-specific stuff
-for f in `generate-site-specific-filenames .bash_profile.`; do
-  . "$f"
-done
+#for f in `generate-site-specific-filenames .bash_profile.`; do
+#  . "$f"
+#done

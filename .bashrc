@@ -197,6 +197,9 @@ if [[ -n "$(type -p go)" && -d ~/go ]]; then
     #[[ "$SHLVL" = "1" ]] && export PATH="$GOPATH/bin:$PATH"
 fi
 
+if [[ -d ~/.krew || -n "$KREW_ROOT" ]]; then
+    export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+fi
     
 jdk_switch() {
     if [ -z "$1" ]; then
@@ -227,10 +230,23 @@ PATH="$HOME/bin:$PATH"
 
 [[ -f ~/.tmux-session.load ]] && source ~/.tmux-session.load
 
+[[ -f ~/bin/sys11pass_completion.sh ]] && source ~/bin/sys11pass_completion.sh
+
 [[ -n "$(type -p brew)" && -f $(brew --prefix)/etc/bash_completion ]] && . $(brew --prefix)/etc/bash_completion
 
-# run site-specific stuff
-for f in `generate-site-specific-filenames .bashrc.`; do
-  . "$f"
-done
+# added by travis gem
+[ -f /Users/oklischat/.travis/travis.sh ] && source /Users/oklischat/.travis/travis.sh
 
+if [[ -f "/usr/local/opt/kube-ps1/share/kube-ps1.sh" ]]; then
+    . "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+    PS1='$(kube_ps1)'$PS1
+fi
+
+if [[ -S $SSH_AUTH_SOCK ]]; then
+    ln -sf $SSH_AUTH_SOCK "$HOME/.ssh/auth_sock"
+fi
+
+# run site-specific stuff
+#for f in `generate-site-specific-filenames .bashrc.`; do
+#  . "$f"
+#done
