@@ -123,3 +123,7 @@ if [[ -d ~/.krew || -n "$KREW_ROOT" ]]; then
     export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 fi
 
+if [[ -S $SSH_AUTH_SOCK ]]; then
+    ln -sf $SSH_AUTH_SOCK "$HOME/.ssh/auth_sock"
+fi
+
