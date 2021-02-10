@@ -20,6 +20,8 @@ fi
 
 PATH="$oldpath"
 
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 # don't create core files
 ulimit -c 0
 
