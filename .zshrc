@@ -2,9 +2,12 @@ source .zsh/functions.zsh
 
 env_default 'LESS' '-R'
 
+# make alt-backspace stop deleting at any non-alphanumeric character
+WORDCHARS=''
+
 ## make Ctrl-W delete some additional characters as well
 my-backward-delete-word() {
-    local WORDCHARS="${WORDCHARS}-,.;'<>:\"[]{}-=_+!$%^&*()";
+    local WORDCHARS="${WORDCHARS}-,.;'<>:\"[]{}/-=_+!$%^&*()";
     zle backward-delete-word;
 }
 zle -N my-backward-delete-word
