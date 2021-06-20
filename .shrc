@@ -113,6 +113,7 @@ if [[ -f "/usr/local/opt/kube-ps1/share/kube-ps1.sh" ]]; then
 fi
 
 if [[ -x "$(which kubectl)" ]]; then
+    alias k=kubectl
     source <(kubectl completion $_shell)
 fi
 
