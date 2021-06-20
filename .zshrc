@@ -11,6 +11,11 @@ setopt sh_word_split
 
 autoload -U +X compinit && compinit
 
+# re-bind <tab> to expand-or-complete-prefix rather than the default
+# expand-or-complete. expand-or-complete-prefix will complete everything left
+# of the cursor even if the cursor is in the middle of the word
+bindkey '^i' expand-or-complete-prefix
+
 if [[ -f ~/.shrc ]]; then
     . ~/.shrc
 fi
