@@ -16,6 +16,11 @@ bindkey '^W' my-backward-delete-word
 # split words like bash does
 setopt sh_word_split
 
+## History file configuration
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=10000
+
 autoload -U +X compinit && compinit
 
 # re-bind <tab> to expand-or-complete-prefix rather than the default
