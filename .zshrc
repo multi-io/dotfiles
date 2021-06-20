@@ -20,6 +20,9 @@ autoload -U +X compinit && compinit
 # of the cursor even if the cursor is in the middle of the word
 bindkey '^i' expand-or-complete-prefix
 
+# menu completion
+zstyle ':completion:*' menu select
+
 if [[ -f ~/.shrc ]]; then
     . ~/.shrc
 fi
