@@ -1,3 +1,7 @@
+source .zsh/functions.zsh
+
+env_default 'LESS' '-R'
+
 ## make Ctrl-W delete some additional characters as well
 my-backward-delete-word() {
     local WORDCHARS="${WORDCHARS}-,.;'<>:\"[]{}-=_+!$%^&*()";
