@@ -114,6 +114,7 @@ fi
 
 if [[ -x "$(which kubectl)" ]]; then
     alias k=kubectl
+    alias kns=kubens
     source <(kubectl completion $_shell)
 fi
 
