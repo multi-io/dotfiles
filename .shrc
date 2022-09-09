@@ -121,6 +121,10 @@ fi
 if [[ -x "$(which kubectl)" ]]; then
     alias k=kubectl
     alias kns=kubens
+    if [[ -x "$(which adminkubectl)" ]]; then
+        alias ak=adminkubectl
+        alias akns=adminkubens
+    fi
     source <(kubectl completion $_shell)
 fi
 
