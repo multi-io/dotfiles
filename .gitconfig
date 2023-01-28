@@ -4,6 +4,7 @@
 [core]
 	pager = cat
 	autocrlf = false
+	excludesfile = /Users/oklischat/.gitignore_global
 [color]
 	ui = auto
 [alias]
@@ -19,3 +20,9 @@
 	smtpserver = smtp.gmail.com
 	smtpuser = olaf.klischat@gmail.com
 	smtpserverport = 587
+[http "https://gopkg.in"]
+	followRedirects = true
+[push]
+	default = upstream
+[safe]
+	directory = *
