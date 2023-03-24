@@ -98,8 +98,8 @@ jdk_switch() {
 
 export PATH="$HOME/bin:$PATH"
 
-if [[ -d "/opt/homebrew/opt/findutils/libexec/gnubin" ]]; then
-    export PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
+if [[ -d "$HOME/gnubin" ]]; then
+    export PATH="$HOME/gnubin:$PATH"
 fi
 
 [[ -f ~/.tmux-session.load ]] && source ~/.tmux-session.load
