@@ -89,7 +89,7 @@ jdk_switch() {
 
     echo "switching JAVA_HOME to $jh" >&2
     # try to remove the current $JAVA_HOME from $PATH
-    if [ -x /usr/bin/ruby ]; then  # need to use the native ruby binary, not any rbenv shim, to get an unchanged $PATH in the script
+    if [[ -x /usr/bin/ruby ]] && [[ -n "$JAVA_HOME" ]]; then  # need to use the native ruby binary, not any rbenv shim, to get an unchanged $PATH in the script
         export PATH=$(/usr/bin/ruby -e "print ENV['PATH'].gsub(\"#{ENV['JAVA_HOME']}/bin:\", '')")
     fi
     export JAVA_HOME="$jh"
