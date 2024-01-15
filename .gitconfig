@@ -22,6 +22,8 @@
 	smtpserverport = 587
 [http "https://gopkg.in"]
 	followRedirects = true
+[url "ssh://git@gitlab.home.olaflocal.olaf-klischat.de/"]
+	insteadOf = https://gitlab.home.olaflocal.olaf-klischat.de/
 [push]
 	default = upstream
 [safe]
