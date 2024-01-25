@@ -33,14 +33,8 @@ if command -v rbenv >/dev/null ; then
     eval "$(rbenv init -)"
 fi
 
-if [ -d "$HOME/.pyenv" ]; then
+if [[ -d "$HOME/.pyenv" ]] && command -v pyenv >/dev/null; then
     export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    ## adds .pyenv/shims to $PATH. We assume eval "$(pyenv init -)" is already run by a system-wide shrc
-    eval "$(pyenv init --path)"
-fi
-
-if command -v pyenv >/dev/null ; then
 
     eval "$(pyenv init -)"
 
@@ -48,7 +42,6 @@ if command -v pyenv >/dev/null ; then
         eval "$(pyenv virtualenv-init -)"
     fi
 fi
-
 
 if [ "$SHLVL" = "1" ]; then
     if perl -e 'use local::lib' >/dev/null 2>&1 || perl "-I$HOME/perl5/lib/perl5" -e 'use local::lib' >/dev/null 2>&1 ; then
