@@ -95,7 +95,7 @@ bindkey '^W' my-backward-delete-word
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -103,6 +103,29 @@ bindkey '^W' my-backward-delete-word
 # else
 #   export EDITOR='mvim'
 # fi
+
+export EDITOR=vim
+
+# help for zsh builtins
+unalias run-help
+autoload run-help
+alias help=run-help
+
+# pre-prompt hook
+
+function my_precmd() {
+    # (sys11) in tmux, turn pane bg red when we connect to prod
+    if [[ -n "$TMUX_PANE" ]]; then
+        if [[ "$ENVIRONMENT" = "prod" || "$KUBECONFIG" = "${HOME}/.kube/configs/kubeconfig-metakube" ]]; then
+            tmux set -p window-style 'bg=#500000'
+        else
+            tmux set -p -u window-style
+        fi
+    fi
+}
+
+typeset -a precmd_functions
+precmd_functions+=(my_precmd)
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
