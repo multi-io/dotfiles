@@ -73,6 +73,8 @@ DISABLE_MAGIC_FUNCTIONS="true"
 
 plugins=()
 if type -p kubectl >/dev/null; then
+    KUBE_PS1_SEPARATOR=' '
+    KUBE_PS1_DIVIDER=' '
     plugins+=(kube-ps1)
 fi
 
