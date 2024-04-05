@@ -113,12 +113,17 @@ fi
 
 if [[ -x "$(which kubectl)" ]]; then
     alias k=kubectl
+    alias ks='kubectl --namespace kube-system'
     alias kns=kubens
     if [[ -x "$(which adminkubectl)" ]]; then
         alias ak=adminkubectl
         alias akns=adminkubens
     fi
     source <(kubectl completion $_shell)
+fi
+
+if [[ -x "$(which hubble)" ]]; then
+    source <(hubble completion $_shell)
 fi
 
 if [[ -S $SSH_AUTH_SOCK ]]; then
