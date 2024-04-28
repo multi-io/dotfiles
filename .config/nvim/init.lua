@@ -110,6 +110,7 @@ require("lazy").setup({
             vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
             vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
             vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+            vim.keymap.set('n', '<leader>fs', builtin.lsp_dynamic_workspace_symbols, {})
         end
     },
 
@@ -156,13 +157,15 @@ require("lazy").setup({
         dependencies = {
             'williamboman/mason.nvim',
             "williamboman/mason-lspconfig.nvim",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-buffer",
             "hrsh7th/nvim-cmp",
         },
         config = function()
             -- just set all dependencies up in here as well
             -- require('nvim-lspconfig')  -- nvim-lspconfig itself doesn't have a module?
-            local cmp = require('cmp')
             require('mason').setup()
             require('mason-lspconfig').setup({
                 ensure_installed = {
@@ -178,7 +181,6 @@ require("lazy").setup({
                     'tsserver',
                     'autotools_ls',
                     'terraformls',
-                    -- TODO python
                     'pyright',
                 },
                 automatic_installation = true,
@@ -231,16 +233,24 @@ require("lazy").setup({
                 },
             })
 
+            local cmp = require('cmp')
+
             local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
             cmp.setup {
                 mapping = cmp.mapping.preset.insert({
                     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
                     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+                    ['<Enter>'] = cmp.mapping.confirm({ select = true }),
                     ["<C-Space>"] = cmp.mapping.complete(),
                 }),
-                sources = {
+                -- the cmp.config.sources() adds a group_index field to each source,
+                -- which is then used by cmp for prioritizing. See :h cmp-config.sources\[n\].group_index
+                sources = cmp.config.sources({
+                    {
+                        name = 'nvim_lsp'
+                    },
+                }, {
                     {
                         name = 'buffer',
                         option = {
@@ -254,7 +264,10 @@ require("lazy").setup({
                             end
                         },
                     },
-                }
+                    {
+                        name = "path"
+                    },
+                })
             }
 
             vim.diagnostic.config({
