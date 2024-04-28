@@ -155,11 +155,14 @@ require("lazy").setup({
         "neovim/nvim-lspconfig",
         dependencies = {
             'williamboman/mason.nvim',
-            "williamboman/mason-lspconfig.nvim"
+            "williamboman/mason-lspconfig.nvim",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/nvim-cmp",
         },
         config = function()
             -- just set all dependencies up in here as well
             -- require('nvim-lspconfig')  -- nvim-lspconfig itself doesn't have a module?
+            local cmp = require('cmp')
             require('mason').setup()
             require('mason-lspconfig').setup({
                 ensure_installed = {
@@ -180,7 +183,7 @@ require("lazy").setup({
                 },
                 automatic_installation = true,
 
-                -- handlers - define when any of the above (ensure_installed) LSs needs to be set up
+                -- handlers - define what to do when any of the above (ensure_installed) LSs needs to be set up
                 -- see :h mason-lspconfig.setup_handlers()
                 handlers = {
                     function(server_name)
@@ -225,6 +228,44 @@ require("lazy").setup({
 
                         }
                     end
+                },
+            })
+
+            local cmp_select = { behavior = cmp.SelectBehavior.Select }
+
+            cmp.setup {
+                mapping = cmp.mapping.preset.insert({
+                    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+                    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+                    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+                    ["<C-Space>"] = cmp.mapping.complete(),
+                }),
+                sources = {
+                    {
+                        name = 'buffer',
+                        option = {
+                            get_bufnrs = function()
+                                local buf = vim.api.nvim_get_current_buf()
+                                local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+                                if byte_size > 1024 * 1024 then -- 1 Megabyte max
+                                    return {}
+                                end
+                                return { buf }
+                            end
+                        },
+                    },
+                }
+            }
+
+            vim.diagnostic.config({
+                -- update_in_insert = true,
+                float = {
+                    focusable = false,
+                    style = "minimal",
+                    border = "rounded",
+                    source = "always",
+                    header = "",
+                    prefix = "",
                 },
             })
         end
