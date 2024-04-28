@@ -115,8 +115,8 @@ require("lazy").setup({
 
     {
         'nvim-treesitter/nvim-treesitter',
-        config = function(plugin, opts)
-            require('nvim-treesitter').setup(opts)
+        config = function()
+            require('nvim-treesitter').setup()
             local configs = require('nvim-treesitter.configs')
             configs.setup {
                 ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "go", "bash", "java", "javascript", "json", "jsonnet", "html", "gotmpl", "typescript" },
@@ -145,9 +145,9 @@ require("lazy").setup({
     {
         'numToStr/Comment.nvim',
         lazy = false,
-        config = function(plugin, opts)
+        config = function()
             -- if opts isn't set for the plugin, the default config implementation does nothing.
-            require('Comment').setup(opts)
+            require('Comment').setup()
         end
     },
 
