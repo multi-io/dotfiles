@@ -150,5 +150,38 @@ require("lazy").setup({
             require('Comment').setup(opts)
         end
     },
+
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
+            'williamboman/mason.nvim',
+            "williamboman/mason-lspconfig.nvim"
+        },
+        config = function(plugin, opts)
+            -- just set all dependencies up in here as well
+            -- require('nvim-lspconfig')  -- nvim-lspconfig itself doesn't have a module?
+            require('mason').setup()
+            require('mason-lspconfig').setup({
+                ensure_installed = {
+                    'ansiblels',
+                    'bashls',
+                    'clangd',
+                    'cssls',
+                    'dockerls',
+                    'docker_compose_language_service',
+                    'gopls',
+                    'lua_ls',
+                    'rust_analyzer',
+                    'tsserver',
+                    'autotools_ls',
+                    'terraformls',
+                    -- TODO python
+                    'pyright',
+                },
+                -- automatic_installation = true,
+            })
+        end
+    },
+
 })
 
