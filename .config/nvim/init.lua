@@ -157,10 +157,11 @@ require("lazy").setup({
             'williamboman/mason.nvim',
             "williamboman/mason-lspconfig.nvim"
         },
-        config = function(plugin, opts)
+        config = function()
             -- just set all dependencies up in here as well
             -- require('nvim-lspconfig')  -- nvim-lspconfig itself doesn't have a module?
-			local lspconf = {
+            require('mason').setup()
+            require('mason-lspconfig').setup({
                 ensure_installed = {
                     'ansiblels',
                     'bashls',
@@ -178,14 +179,16 @@ require("lazy").setup({
                     'pyright',
                 },
                 automatic_installation = true,
-            }
-            require('mason').setup()
-            require('mason-lspconfig').setup(lspconf)
 
-            local lspconfig = require('lspconfig')
-            for _,lsp in pairs(lspconf.ensure_installed) do
-                lspconfig[lsp].setup({})
-            end
+                -- handlers - define when any of the above (ensure_installed) LSs needs to be set up
+                -- see :h mason-lspconfig.setup_handlers()
+                handlers = {
+                    function(server_name)
+                         -- default (fallback) handler
+                        require('lspconfig')[server_name].setup{}
+                    end
+                },
+            })
         end
     },
 
