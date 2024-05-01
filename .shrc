@@ -142,3 +142,9 @@ fi
 if [[ -f "$HOME/.cargo/env" ]]; then
     . "$HOME/.cargo/env"
 fi
+
+if [[ -d "$HOME/.shrc.d" ]]; then
+    find "$HOME/.shrc.d" -mindepth 1 -maxdepth 1 -type f -name '*.sh' | sort | while read script; do
+        . "$script"
+    done
+fi

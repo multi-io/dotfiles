@@ -146,5 +146,11 @@ if [[ -f ~/.shrc ]]; then
     . ~/.shrc
 fi
 
+if [[ -d "$HOME/.zshrc.d" ]]; then
+    find "$HOME/.zshrc.d" -mindepth 1 -maxdepth 1 -type f -name '*.sh' | sort | while read script; do
+        . "$script"
+    done
+fi
+
 PROMPT+="
 $(echo $'%B#>%b') "
