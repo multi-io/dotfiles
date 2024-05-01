@@ -1,7 +1,25 @@
 # vim: set ft=sh
 
-oldpath="$PATH"
 export PATH="/usr/local/bin:$PATH"
+
+export PATH=".:$(generate-site-specific-filenames -n "$HOME/bin/" | tr ' ' ':'):$HOME/bin:$PATH"
+export USERNAME="Olaf Klischat"
+
+if [[ -d "$HOME/share/perl" ]]; then
+    export PERLLIB="$PERLLIB:$HOME/share/perl"
+fi
+
+if [[ -d "$HOME/lib/ruby" ]]; then
+    export RUBYLIB="$HOME/lib/ruby"
+fi
+
+export IRCNICK=multi_io
+export HISTSIZE=10000
+
+if [[ -z "$LANG" ]]; then
+    export LANG=en_US.UTF-8
+fi
+export LC_CTYPE=$LANG    # in some environments (e.g. OSX?), for some reason, LC_CTYPE gets set to just UTF-8, which is broken
 
 alias cd-prjdir='cd "$(fzf-prjdir)"'
 
@@ -25,9 +43,6 @@ fi
 if [ -f ~/openrc ]; then
     . ~/openrc
 fi
-
-
-export PATH="$oldpath"
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 
@@ -136,7 +151,7 @@ if [[ -x "$(which hubble)" ]]; then
 fi
 
 if [[ -S $SSH_AUTH_SOCK ]]; then
-    ln -sf $SSH_AUTH_SOCK "$HOME/.ssh/auth_sock"
+    ln -sf "$SSH_AUTH_SOCK" "$HOME/.ssh/auth_sock"
 fi
 
 if [[ -f "$HOME/.cargo/env" ]]; then
@@ -148,3 +163,8 @@ if [[ -d "$HOME/.shrc.d" ]]; then
         . "$script"
     done
 fi
+
+# uniquify $PATH
+## nicer, but only fast with non-rbenv ruby, which may not be in the same place everywhere
+# export PATH="$(/usr/bin/ruby -e "puts ENV['PATH'].split(':').uniq.join(':')")"
+export PATH="$(perl -e 'print join ":", (grep !$seen{$_}++, split(/:/, %ENV{PATH}))')"
