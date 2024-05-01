@@ -109,8 +109,6 @@ export LANG=en_US.UTF-8
 #   export EDITOR='mvim'
 # fi
 
-export EDITOR=vim
-
 # help for zsh builtins
 unalias run-help
 autoload run-help

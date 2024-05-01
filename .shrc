@@ -12,6 +12,11 @@ if [ -x "$(which virtualenv)" ]; then
     export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 fi
 
+export EDITOR=vim
+if type -p nvim >/dev/null; then  # TODO check if vim isn't already symlinked to nvim
+    alias vim=nvim
+    export EDITOR=nvim
+fi
 
 if [ -f ~/openrc ]; then
     . ~/openrc
