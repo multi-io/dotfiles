@@ -1,5 +1,9 @@
+# vim: set ft=sh
+
 oldpath="$PATH"
 export PATH="/usr/local/bin:$PATH"
+
+alias cd-prjdir='cd "$(fzf-prjdir)"'
 
 if [ -x "$(which virtualenv)" ]; then
     # virtualenv should use Distribute instead of legacy setuptools

@@ -86,9 +86,6 @@ if type -p kubectl >/dev/null; then
     PROMPT=$PROMPT'$(kube_ps1) '
 fi
 
-PROMPT+="
-$(echo $'%B#>%b') "
-
 ## make Ctrl-W delete some additional characters as well
 my-backward-delete-word() {
     local WORDCHARS="${WORDCHARS}-,.;'<>:\"[]{}-=_+!$%^&*()";
@@ -148,3 +145,6 @@ setopt sh_word_split
 if [[ -f ~/.shrc ]]; then
     . ~/.shrc
 fi
+
+PROMPT+="
+$(echo $'%B#>%b') "
