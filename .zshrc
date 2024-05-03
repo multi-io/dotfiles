@@ -111,7 +111,7 @@ export LANG=en_US.UTF-8
 # fi
 
 # help for zsh builtins
-unalias run-help
+#unalias run-help
 autoload run-help
 alias help=run-help
 
