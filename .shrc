@@ -1,6 +1,6 @@
 # vim: set ft=sh
 
-export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
 
 export PATH=".:$(generate-site-specific-filenames -n "$HOME/bin/" | tr ' ' ':'):$HOME/bin:$PATH"
 export USERNAME="Olaf Klischat"
