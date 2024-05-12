@@ -1,0 +1,2 @@
+FILTER='^(.config/|.bashrc|.shrc)'
+
