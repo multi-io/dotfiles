@@ -1,4 +1,10 @@
-# vim: set ft=sh
+# vim: ft=sh
+
+alias_new() {
+    if ! alias "$1" >/dev/null 2>&1; then
+        alias "$1"="$2"
+    fi
+}
 
 export PATH="$HOME/bin:/usr/local/bin:$PATH"
 
@@ -36,7 +42,7 @@ fi
 
 export EDITOR=vim
 if type -p nvim >/dev/null; then  # TODO check if vim isn't already symlinked to nvim
-    alias vim=nvim
+    alias_new vim nvim
     export EDITOR=nvim
 fi
 
@@ -119,6 +125,23 @@ if [[ -d "$HOME/gnubin" ]]; then
     export PATH="$HOME/gnubin:$PATH"
 fi
 
+# enable color support of ls and also add handy aliases
+if type -p dircolors >/dev/null; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    # override any ls alias oh-my-zsh may have created, as its OS/GNU detection doesn't work reliably
+    alias ls='ls --color=auto'
+fi
+
+alias l='ls'
+alias la='ls -a'
+alias ll='ls -lah'
+
+alias_new grep 'grep --color=auto'
+alias_new fgrep 'fgrep --color=auto'
+alias_new egrep 'egrep --color=auto'
+
+alias_new skopeo 'docker run --rm luebken/skopeo skopeo'
+
 [[ -f ~/.tmux-session.load ]] && source ~/.tmux-session.load
 
 # added by travis gem
@@ -136,12 +159,12 @@ if [[ -f "/usr/local/opt/kube-ps1/share/kube-ps1.sh" ]]; then
 fi
 
 if [[ -x "$(which kubectl)" ]]; then
-    alias k=kubectl
-    alias ks='kubectl --namespace kube-system'
-    alias kns=kubens
+    alias_new k kubectl
+    alias_new ks 'kubectl --namespace kube-system'
+    alias_new kns kubens
     if [[ -x "$(which adminkubectl)" ]]; then
-        alias ak=adminkubectl
-        alias akns=adminkubens
+        alias_new ak adminkubectl
+        alias_new akns adminkubens
     fi
     source <(kubectl completion $_shell)
 fi
