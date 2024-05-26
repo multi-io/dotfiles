@@ -79,7 +79,7 @@ plugins=()
 if type -p kubectl >/dev/null; then
     KUBE_PS1_SEPARATOR=' '
     KUBE_PS1_DIVIDER=' '
-    plugins+=(kube-ps1)
+    plugins+=(kubectl kube-ps1)
 fi
 
 source $ZSH/oh-my-zsh.sh
