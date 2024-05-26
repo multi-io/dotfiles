@@ -6,6 +6,13 @@ alias_new() {
     fi
 }
 
+# check if a command was installed via brew, in which case we'll
+# usually assume its completion has already been loaded in the shell-specific rc file
+# TODO instead, try to find out directly whether completion for a given command exists
+is_brew_installed() {
+    type brew &>/dev/null && [[ -x "$(brew --prefix)/bin/$1" ]]
+}
+
 export PATH="$HOME/bin:/usr/local/bin:$PATH"
 
 export PATH=".:$(generate-site-specific-filenames -n "$HOME/bin/" | tr ' ' ':'):$HOME/bin:$PATH"
@@ -166,10 +173,10 @@ if [[ -x "$(which kubectl)" ]]; then
         alias_new ak adminkubectl
         alias_new akns adminkubens
     fi
-    source <(kubectl completion $_shell)
+    ! is_brew_installed kubectl && source <(kubectl completion $_shell)
 fi
 
-if [[ -x "$(which hubble)" ]]; then
+if [[ -x "$(which hubble)" ]] && ! is_brew_installed hubble; then
     source <(hubble completion $_shell)
 fi
 
