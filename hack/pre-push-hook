@@ -1,0 +1,45 @@
+#!/bin/sh
+# git pre-push hook to ensure we're not pushing any files not matching hack/env.sh/$FILTER to pub-github
+
+set -e
+
+remote="$1"
+url="$2"
+
+if [ "$remote" != "pub-github" ]; then
+    exit 0
+fi
+
+. "$(dirname "$0")/../../hack/env.sh"
+
+z40=0000000000000000000000000000000000000000
+
+IFS=' '
+while read local_ref local_sha remote_ref remote_sha
+do
+	if [ "$local_sha" = $z40 ]
+	then
+		# Handle delete
+		:
+	else
+		if [ "$remote_sha" = $z40 ]
+		then
+			# New branch, examine all commits
+			range="$local_sha"
+		else
+			# Update to existing branch, examine new commits
+			range="$remote_sha..$local_sha"
+		fi
+
+        git rev-list "$range" | while read sha; do
+            git diff-tree --no-commit-id --name-only "$sha" -r | while read filename; do
+                if ! echo "$filename" | grep -Eq "$FILTER"; then
+                    echo "refusing to push file not matching filter to $remote: $filename (commit $sha)"
+                    exit 1
+                fi
+            done
+        done
+	fi
+done
+
+exit 0
