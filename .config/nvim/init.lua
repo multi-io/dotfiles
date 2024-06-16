@@ -247,7 +247,7 @@ require("lazy").setup({
                 mapping = cmp.mapping.preset.insert({
                     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
                     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                    ['<Enter>'] = cmp.mapping.confirm({ select = true }),
+                    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
                     ["<C-Space>"] = cmp.mapping.complete(),
                 }),
                 -- the cmp.config.sources() adds a group_index field to each source,
