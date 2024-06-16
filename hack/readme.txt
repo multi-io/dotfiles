@@ -1,3 +1,8 @@
+# one-time setup
+
+cd .git/hooks
+ln -sf ../../hack/pre-push-hook pre-push
+
 # initial split
 
 hack/initial-split.sh
@@ -18,3 +23,5 @@ git checkout master
 git merge pub-master --no-edit --allow-unrelated-histories
 git tag -f last-pub-merge
 git branch -D new-pub-master
+
+git push pub-github pub-master:main
