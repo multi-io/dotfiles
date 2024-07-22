@@ -17,6 +17,11 @@ vim.opt.relativenumber = true
 
 vim.opt.scrolloff = 10
 
+if vim.g.vscode then
+    -- https://github.com/vscode-neovim/vscode-neovim/wiki/Version-Compatibility-Notes
+    vim.opt.shortmess:append('s')
+end
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
@@ -153,10 +158,7 @@ require("lazy").setup({
     {
         'numToStr/Comment.nvim',
         lazy = false,
-        config = function()
-            -- if opts isn't set for the plugin, the default config implementation does nothing.
-            require('Comment').setup()
-        end
+        opts = {}
     },
 
     {
