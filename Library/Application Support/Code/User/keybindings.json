@@ -1,0 +1,84 @@
+[
+    {
+        "key": "ctrl+escape",
+        "command":"workbench.action.focusActiveEditorGroup",
+        "when":"notificationFocus || sideBarFocus || panelFocus"
+    },
+    {
+        "key": "cmd+e",
+        "command": "workbench.action.quickOpen",
+        "when": "!inQuickOpen"
+    },
+    {
+        "key": "shift+cmd+o",
+        "command": "workbench.action.quickOpen",
+        "when": "!inQuickOpen"
+    },
+    {
+        "key": "alt+cmd+o",
+        "command": "workbench.action.showAllSymbols"
+    },
+    {
+        "key": "alt+f7",
+        "command": "references-view.findReferences",
+        "when": "editorHasReferenceProvider"
+    },
+    {
+        "key": "ctrl+alt+h",
+        "command": "references-view.showCallHierarchy",
+        "when": "editorHasCallHierarchyProvider"
+    },
+    {
+        "key": "cmd+1",
+        "command": "workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled && !explorerViewletFocus"
+    },
+    {
+        "key": "cmd+3",
+        "command": "workbench.view.search",
+        "when": "workbench.view.search.active && !searchViewletVisible"
+    },
+    {
+        "key": "cmd+5",
+        "command": "workbench.view.debug",
+        "when": "viewContainer.workbench.view.debug.enabled && activeViewlet != 'workbench.view.debug'"
+    },
+    {
+        "key": "cmd+b",
+        "command": "editor.action.goToDeclaration",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+cmd+b",
+        "command": "editor.action.goToImplementation",
+        "when": "editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+        "key": "cmd+[",
+        "command": "-editor.action.outdentLines",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+[",
+        "command": "workbench.action.navigateBack",
+        "when": "canNavigateBack"
+    },
+    {
+        "key": "cmd+]",
+        "command": "-editor.action.indentLines",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+]",
+        "command": "workbench.action.navigateForward",
+        "when": "canNavigateForward"
+    },
+    {
+        "key": "cmd+7",
+        "command": "outline.focus"
+    },
+    {
+        "key": "shift+cmd+a",
+        "command": "workbench.action.showCommands"
+    }
+]
