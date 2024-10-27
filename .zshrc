@@ -99,14 +99,6 @@ if type -p kubectl >/dev/null; then
     PROMPT=$PROMPT'$(kube_ps1) '
 fi
 
-## make Ctrl-W delete some additional characters as well
-my-backward-delete-word() {
-    local WORDCHARS="${WORDCHARS}-,.;'<>:\"[]{}-=_+!$%^&*()";
-    zle backward-delete-word;
-}
-zle -N my-backward-delete-word
-bindkey '^W' my-backward-delete-word
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -126,20 +118,6 @@ alias help=run-help
 
 # pre-prompt hook
 
-function my_precmd() {
-    # (sys11) in tmux, turn pane bg red when we connect to prod
-    if [[ -n "$TMUX_PANE" ]]; then
-        if [[ "$ENVIRONMENT" = "prod" || "$KUBECONFIG" = "${HOME}/.kube/configs/kubeconfig-metakube" ]]; then
-            tmux set -p window-style 'bg=#500000'
-        else
-            tmux set -p -u window-style
-        fi
-    fi
-}
-
-typeset -a precmd_functions
-precmd_functions+=(my_precmd)
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -154,6 +132,76 @@ precmd_functions+=(my_precmd)
 
 # split words like bash does
 setopt sh_word_split
+
+# vim mode
+bindkey -v
+export KEYTIMEOUT=1
+
+# Change cursor shape for different vi modes
+function zle-keymap-select () {
+    case $KEYMAP in
+        vicmd) echo -ne '\e[1 q';;      # block
+        viins|main) echo -ne '\e[5 q';; # beam
+    esac
+}
+zle -N zle-keymap-select
+
+zle-line-init() {
+    zle -K viins
+}
+zle -N zle-line-init
+
+# Edit line in vim with ctrl-t
+autoload edit-command-line; #zle -N edit-command-line
+bindkey '^t' edit-command-line
+bindkey -M vicmd '^t' edit-command-line
+# TODO beam shaped cursor after exiting edit-command-line
+
+# bindkey -M vicmd '^[[P' vi-delete-char
+# bindkey -M visual '^[[P' vi-delete
+
+bindkey -M viins '^p' up-line-or-history
+bindkey -M vicmd '^p' up-line-or-history
+bindkey -M viins '^n' down-line-or-history
+bindkey -M vicmd '^n' down-line-or-history
+
+# ctrl-r is obv. already taken in vi
+bindkey -M viins '^f' history-incremental-search-backward
+bindkey -M vicmd '^f' history-incremental-search-backward
+# N.B. in command mode, can also use / and ? + n/N to search through the history, but w/o interactivity as you type
+# use `bindkey -L -M vicmd` to see all keybindings in command mode
+
+# in incremental searches, make "Enter" put the chosen thing in the editor but DON'T run it immediately
+bindkey -M isearch '^M' accept-search
+
+# retain some navigation keystrokes in insert mode
+bindkey -M viins "^a" beginning-of-line
+bindkey -M viins "^e" end-of-line
+
+## make Ctrl-W delete some additional characters as well
+my-backward-delete-word() {
+    local WORDCHARS="${WORDCHARS}-,.;'<>:\"[]{}-=_+!$%^&*()";
+    zle backward-delete-word;
+}
+zle -N my-backward-delete-word
+bindkey -M viins '^w' my-backward-delete-word
+
+function my_precmd() {
+    # (sys11) in tmux, turn pane bg red when we connect to prod
+    if [[ -n "$TMUX_PANE" ]]; then
+        if [[ "$ENVIRONMENT" = "prod" || "$KUBECONFIG" = "${HOME}/.kube/configs/kubeconfig-metakube" ]]; then
+            tmux set -p window-style 'bg=#500000'
+        else
+            tmux set -p -u window-style
+        fi
+    fi
+
+    # beam-shaped cursor at the start of every prompt TODO doesn't work
+    echo -ne "\e[5 q"
+}
+
+typeset -a precmd_functions
+precmd_functions+=(my_precmd)
 
 if [[ -f ~/.shrc ]]; then
     . ~/.shrc
