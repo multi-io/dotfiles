@@ -1,2 +1,2 @@
-FILTER='^(.config/|.bash|.zsh|.git|.irbrc|.shrc$|.emacs|.xemacs|emacs-lisp|.ssh|.tmux|.vim|.profile|.gitignore|hack|Library)'
+FILTER='^(.config/|.bash|.zsh|.git|.irbrc|.shrc$|.emacs|.xemacs|emacs-lisp|.tmux|.vim|.profile|.gitignore|hack|Library)'
 
