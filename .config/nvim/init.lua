@@ -240,6 +240,7 @@ require("lazy").setup({
                     'autotools_ls',
                     'terraformls',
                     'pyright',
+                    'marksman',
                 },
                 automatic_installation = true,
 
