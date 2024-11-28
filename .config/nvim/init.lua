@@ -364,5 +364,11 @@ require("lazy").setup({
         end
     },
 
+    'dhruvasagar/vim-table-mode',
+
 })
 
+vim.api.nvim_create_autocmd({"Filetype"}, {
+    pattern = {"markdown"},
+    command = "TableModeEnable",
+})
