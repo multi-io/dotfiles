@@ -177,10 +177,14 @@ bindkey -M isearch '^M' accept-search
 # retain some navigation keystrokes in insert mode
 bindkey -M viins "^a" beginning-of-line
 bindkey -M viins "^e" end-of-line
+bindkey -M viins '^d' delete-char
+bindkey -M viins '\33\177' backward-delete-word  # option-backspace
+bindkey -M viins '\33b' backward-word  # option-left
+bindkey -M viins '\33f' forward-word  # option-right
 
 ## make Ctrl-W delete some additional characters as well
 my-backward-delete-word() {
-    local WORDCHARS="${WORDCHARS}-,.;'<>:\"[]{}-=_+!$%^&*()";
+    local WORDCHARS="${WORDCHARS}-,.;'<>:/\"[]{}-=_+!$%^&*()";
     zle backward-delete-word;
 }
 zle -N my-backward-delete-word
