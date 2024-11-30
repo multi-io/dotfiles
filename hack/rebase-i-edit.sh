@@ -13,6 +13,9 @@ if [[ -f .git/MERGE_MSG ]]; then
     # find the commit that we are currently rebasing
     picking="$(tail -1 .git/rebase-merge/done | awk '{print $2}')"
 
+    # get $FILTER of this commit
+    . <(git show ${picking}:hack/env.sh)
+
     # we're assuming that the files in $picking that didn't match the filter are causing the conflict -- probably a "deleted by us" conflict
     # find those files, remove them from the commit
     git show --name-only --pretty="" "$picking" | grep -E -v "$FILTER" | xargs -I{} git rm -f {}
@@ -24,6 +27,9 @@ if [[ -f .git/MERGE_MSG ]]; then
 
 else
     # a commit was produced, see if we need to amend it
+
+    # get $FILTER of this commit
+    . <(git show hack/env.sh)
 
     if [[ -z "$(git show --name-only --pretty="" HEAD | grep -E "$FILTER")" ]]; then
         ## HEAD commit contains no changes to files matching the filter. => remove the commit entirely
