@@ -135,7 +135,7 @@ setopt sh_word_split
 
 # vim mode
 bindkey -v
-export KEYTIMEOUT=1
+export KEYTIMEOUT=1  # only has an effect outside tmux. Inside tmux, there's a corresponding tmux variable "escape-time"
 
 # Change cursor shape for different vi modes
 function zle-keymap-select () {
@@ -178,9 +178,12 @@ bindkey -M isearch '^M' accept-search
 bindkey -M viins "^a" beginning-of-line
 bindkey -M viins "^e" end-of-line
 bindkey -M viins '^d' delete-char
-bindkey -M viins '\33\177' backward-delete-word  # option-backspace
-bindkey -M viins '\33b' backward-word  # option-left
-bindkey -M viins '\33f' forward-word  # option-right
+bindkey -M viins '^[\177' backward-delete-word  # option-backspace
+bindkey -M viins '^[h' backward-char  # option-h
+bindkey -M viins '^[l' forward-char  # option-l
+bindkey -M viins '^[b' backward-word  # option-b and option-left
+bindkey -M viins '^[w' forward-word  # option-w
+bindkey -M viins '^[f' forward-word  # option-f and option-right
 
 ## make Ctrl-W delete some additional characters as well
 my-backward-delete-word() {
