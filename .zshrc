@@ -185,10 +185,9 @@ bindkey -M viins '^[b' backward-word  # option-b and option-left
 bindkey -M viins '^[w' forward-word  # option-w
 bindkey -M viins '^[f' forward-word  # option-f and option-right
 
-## make Ctrl-W delete some additional characters as well
+## make Ctrl-W delete some additional characters compared to option-backspace
 my-backward-delete-word() {
-    local WORDCHARS="${WORDCHARS}-,.;'<>:/\"[]{}-=_+!$%^&*()";
-    zle backward-delete-word;
+    WORDCHARS="${WORDCHARS}-,.;'<>:/\"[]{}-=_+!$%^&*()" zle backward-delete-word;
 }
 zle -N my-backward-delete-word
 bindkey -M viins '^w' my-backward-delete-word
