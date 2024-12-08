@@ -93,6 +93,8 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
+# TODO "uniquify" things like fpath, $FPATH and precmd_functions to make .zshrc re-sourceable
+
 # User configuration
 
 if type -p kubectl >/dev/null; then
