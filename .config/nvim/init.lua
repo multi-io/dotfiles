@@ -128,6 +128,7 @@ require("lazy").setup({
 
     {
         'nvim-treesitter/nvim-treesitter',
+        build = ":TSUpdate",
         config = function()
             require('nvim-treesitter').setup()
             local configs = require('nvim-treesitter.configs')
@@ -209,6 +210,11 @@ require("lazy").setup({
                 vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "single" })<CR>', opts)
                 vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
                 vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+                -- nvim also has some builtin "jump to tag" functionality that predates LSPs (was using ctags originally I think),
+                -- and it uses the vim option "tagfunc" which must be a function that jumps to the tag under the cursor, and it is
+                -- mapped to Ctrl-[. nvim's LSP support sets tagfunc to point to lua.vim.lsp.tagfunc, which ends up calling
+                -- lua vim.lsp.buf.definition() I think. So Ctrl-[ will also jump to definition just like gd does.
+                -- see https://github.com/neovim/nvim-lspconfig?tab=readme-ov-file#configuration
 
                 require 'lsp_signature'.on_attach({
                     bind = true,
@@ -234,6 +240,7 @@ require("lazy").setup({
                     'dockerls',
                     'docker_compose_language_service',
                     'gopls',
+                    'gitlab_ci_ls',
                     'lua_ls',
                     'rust_analyzer',
                     'tsserver',
