@@ -17,6 +17,10 @@ vim.opt.relativenumber = true
 
 vim.opt.scrolloff = 10
 
+-- navigating through quickfix list
+vim.keymap.set('n', '<M-j>', '<cmd>:cnext<CR>', {})
+vim.keymap.set('n', '<M-k>', '<cmd>:cprev<CR>', {})
+
 if vim.g.vscode then
     -- https://github.com/vscode-neovim/vscode-neovim/wiki/Version-Compatibility-Notes
     vim.opt.shortmess:append('s')
@@ -254,12 +258,11 @@ require("lazy").setup({
                 -- handlers - define what to do when any of the above (ensure_installed) LSs needs to be set up
                 -- see :h mason-lspconfig.setup_handlers()
                 handlers = {
+                    -- default (fallback) handler
                     function(server_name)
-                        -- default (fallback) handler
-                        local opts = {
+                        require('lspconfig')[server_name].setup({
                             on_attach = on_attach,
-                        }
-                        require('lspconfig')[server_name].setup(opts)
+                        })
                     end,
 
                     ['lua_ls'] = function()
