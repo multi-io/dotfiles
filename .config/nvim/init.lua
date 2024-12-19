@@ -17,6 +17,12 @@ vim.opt.relativenumber = true
 
 vim.opt.scrolloff = 10
 
+-- navigating through buffer list
+vim.keymap.set('n', 'th', '<cmd>:bprev<CR>', {})
+vim.keymap.set('n', 'tl', '<cmd>:bnext<CR>', {})
+-- quicker way to bring up telescope buffer picker (quicker than <leader>fb)
+vim.keymap.set('n', 'te', '<cmd>:Telescope buffers<CR>', {})
+
 -- navigating through quickfix list
 vim.keymap.set('n', '<M-j>', '<cmd>:cnext<CR>', {})
 vim.keymap.set('n', '<M-k>', '<cmd>:cprev<CR>', {})
@@ -93,6 +99,15 @@ require("lazy").setup({
                 -- empty separators instead of the default special glyphs that would require font installations
                 component_separators = { left = '', right = '' },
                 section_separators = { left = '', right = '' },
+            },
+            sections = {
+                lualine_a = { { 'mode', fmt = function(str) return str:sub(1,1) end } },
+                lualine_c = { {
+                    'buffers',
+                    buffers_color = {
+                        active = { bg = '#33aa88' },
+                    },
+                } },
             },
         },
     },
@@ -217,10 +232,11 @@ require("lazy").setup({
                 vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "single" })<CR>', opts)
                 vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
                 vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
-                -- nvim also has some builtin "jump to tag" functionality that predates LSPs (was using ctags originally I think),
-                -- and it uses the vim option "tagfunc" which must be a function that jumps to the tag under the cursor, and it is
-                -- mapped to Ctrl-[. nvim's LSP support sets tagfunc to point to lua.vim.lsp.tagfunc, which ends up calling
-                -- lua vim.lsp.buf.definition() I think. So Ctrl-[ will also jump to definition just like gd does.
+                -- nvim also has some builtin "jump to tag" functionality that predates LSPs (was using ctags originally),
+                -- and it uses the vim option "tagfunc" which must be a function that jumps to the tag under the cursor.
+                -- It's mapped to Ctrl-].
+                -- nvim's LSP support sets tagfunc to point to lua.vim.lsp.tagfunc, which is glue code that ends up calling
+                -- lua vim.lsp.buf.definition() I think. So Ctrl-] will also jump to definition just like gd does.
                 -- see https://github.com/neovim/nvim-lspconfig?tab=readme-ov-file#configuration
 
                 require 'lsp_signature'.on_attach({
