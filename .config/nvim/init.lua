@@ -21,6 +21,9 @@ vim.opt.scrolloff = 10
 vim.keymap.set('n', '<M-j>', '<cmd>:cnext<CR>', {})
 vim.keymap.set('n', '<M-k>', '<cmd>:cprev<CR>', {})
 
+-- open Oil (directory editor) on parent directory of current file
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
 if vim.g.vscode then
     -- https://github.com/vscode-neovim/vscode-neovim/wiki/Version-Compatibility-Notes
     vim.opt.shortmess:append('s')
@@ -376,6 +379,15 @@ require("lazy").setup({
 
     'dhruvasagar/vim-table-mode',
 
+    {
+        'stevearc/oil.nvim',
+        ---@module 'oil'
+        ---@type oil.SetupOpts
+        opts = {},
+        -- Optional dependencies
+        dependencies = { { "echasnovski/mini.icons", opts = {} } },
+        -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+    },
 })
 
 vim.api.nvim_create_autocmd({"Filetype"}, {
