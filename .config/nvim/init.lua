@@ -239,6 +239,17 @@ require("lazy").setup({
                 -- lua vim.lsp.buf.definition() I think. So Ctrl-] will also jump to definition just like gd does.
                 -- see https://github.com/neovim/nvim-lspconfig?tab=readme-ov-file#configuration
 
+                -- indent file on save -- TODO too intrusive rn; try to restrict it to added & changed lines from the git diff
+                -- if client.supports_method('textDocument/formatting') then
+                --     vim.api.nvim_create_autocmd('BufWritePre', {
+                --         desc = 'indent file on save',
+                --         buffer = bufnr,
+                --         callback = function()
+                --             vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
+                --         end,
+                --     })
+                -- end
+
                 require 'lsp_signature'.on_attach({
                     bind = true,
                     floating_window_above_cur_line = true,
@@ -264,6 +275,7 @@ require("lazy").setup({
                     'docker_compose_language_service',
                     'gopls',
                     'gitlab_ci_ls',
+                    'html',
                     'lua_ls',
                     'rust_analyzer',
                     'tsserver',
