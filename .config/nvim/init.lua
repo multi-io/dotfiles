@@ -145,6 +145,7 @@ require("lazy").setup({
             vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
             vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
             vim.keymap.set('n', '<leader>fs', builtin.lsp_dynamic_workspace_symbols, {})
+            vim.keymap.set('n', '<leader>fc', builtin.commands, {})
         end
     },
 
