@@ -433,6 +433,88 @@ require("lazy").setup({
         dependencies = { { "echasnovski/mini.icons", opts = {} } },
         -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
     },
+
+    {
+        'mfussenegger/nvim-dap',
+        dependencies = {
+            'theHamsta/nvim-dap-virtual-text',
+            'nvim-neotest/nvim-nio',
+            'rcarriga/nvim-dap-ui',
+        },
+        config = function ()
+            local dap = require('dap')
+            local ui = require('dapui')
+
+            ui.setup()
+
+            -- TODO I don't fully understand what's happening here. The adapter must really be named "pwa-node"
+            -- to enable the dap adapter with that name, which is provided by dapDebugServer.js.
+            -- I always thought this name was just a freely chosen name to connect the adapters to the configurations.
+            -- TODO use dap-vscode-js to create the adapters rather than doing it manually
+            -- see https://github.com/anasrar/.dotfiles/blob/fdf4b88dfd2255b90f03c62dfc0f3f9458dc99a9/neovim/.config/nvim/lua/rin/DAP/languages/typescript.lua
+            -- TODO look into https://github.com/jay-babu/mason-nvim-dap.nvim which should automate the setup even more
+            -- also see https://www.youtube.com/watch?v=Ul_WPhS2bis
+            -- TODO better UI and icons etc. see https://www.lazyvim.org/extras/dap/core#nvim-dap
+            -- TODO maybe different keymaps with <leader>d.. and which-key integration
+            dap.adapters['pwa-node'] = {
+                type = "server",
+                host = 'localhost',
+                port = "${port}",
+                executable = {
+                    command = "node",
+                    args = {"/home/olaf/Downloads/js-debug/src/dapDebugServer.js", "${port}"}, -- TODO download/clone automatically using lazy
+                }
+            }
+
+            dap.configurations.javascript = {
+                {
+                    type = "pwa-node",
+                    request = "launch",
+                    name = "Launch file",
+                    program = "${file}",
+                    cwd = "${workspaceFolder}",
+                },
+                {
+                    type = "pwa-node",
+                    request = "attach",
+                    name = "Attach to node.js processs",
+                    processId = require('dap.utils').pick_process,  -- TODO find the process listening on localhost:9229 (a node run with --inspect-wait)
+                    cwd = "${workspaceFolder}",
+                    sourceMaps = true,
+                },
+            }
+
+            vim.keymap.set("n", "<space>b", dap.toggle_breakpoint)
+            vim.keymap.set("n", "<space>gb", dap.run_to_cursor)
+
+            -- Eval var under cursor
+            vim.keymap.set("n", "<leader>?", function()
+                ---@diagnostic disable-next-line: missing-fields
+                ui.eval(nil, { enter = true })
+            end)
+
+            vim.keymap.set("n", "<F1>", dap.continue)
+            vim.keymap.set("n", "<F7>", dap.step_into)
+            vim.keymap.set("n", "<F8>", dap.step_over)
+            vim.keymap.set("n", "<F4>", dap.step_out)
+            vim.keymap.set("n", "<F5>", dap.step_back)
+            vim.keymap.set("n", "<F12>", dap.restart)
+
+            dap.listeners.before.attach.dapui_config = function()
+                ui.open()
+            end
+            dap.listeners.before.launch.dapui_config = function()
+                ui.open()
+            end
+            dap.listeners.before.event_terminated.dapui_config = function()
+                ui.close()
+            end
+            dap.listeners.before.event_exited.dapui_config = function()
+                ui.close()
+            end
+        end
+    },
+
 })
 
 vim.api.nvim_create_autocmd({"Filetype"}, {
