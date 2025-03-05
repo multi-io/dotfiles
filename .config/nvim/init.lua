@@ -18,14 +18,15 @@ vim.opt.relativenumber = true
 vim.opt.scrolloff = 10
 
 -- navigating through buffer list
-vim.keymap.set('n', 'th', '<cmd>:bprev<CR>', {})
-vim.keymap.set('n', 'tl', '<cmd>:bnext<CR>', {})
+vim.keymap.set('n', 'th', '<cmd>:bprev<CR>', { desc = "previous buffer" })
+vim.keymap.set('n', 'tl', '<cmd>:bnext<CR>', { desc = "next buffer" })
+vim.keymap.set('n', 'td', '<cmd>:bdelete<CR>', { desc = "delete buffer" })
 -- quicker way to bring up telescope buffer picker (quicker than <leader>fb)
-vim.keymap.set('n', 'te', '<cmd>:Telescope buffers<CR>', {})
+vim.keymap.set('n', 'te', '<cmd>:Telescope buffers<CR>', { desc = "telescope find buffer" })
 
 -- navigating through quickfix list
-vim.keymap.set('n', '<M-j>', '<cmd>:cnext<CR>', {})
-vim.keymap.set('n', '<M-k>', '<cmd>:cprev<CR>', {})
+vim.keymap.set('n', '<M-j>', '<cmd>:cnext<CR>', { desc = "quickfix next" })
+vim.keymap.set('n', '<M-k>', '<cmd>:cprev<CR>', { desc = "quickfix previous" })
 
 -- open Oil (directory editor) on parent directory of current file
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
@@ -140,16 +141,16 @@ require("lazy").setup({
                 }
             })
             local builtin = require('telescope.builtin')
-            vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-            vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+            vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "telescope find files" })
+            vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "telescope grep" })
             vim.keymap.set('n', '<leader>fd', function()
                 builtin.live_grep { search_dirs = {vim.env.HOME .. "/doc/mydocs"} }
-            end, { desc = "grep through ~/doc/mydocs" })
-            vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-            vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-            vim.keymap.set('n', '<leader>fs', builtin.lsp_dynamic_workspace_symbols, {})
-            vim.keymap.set('n', '<leader>fc', builtin.commands, {})
-            vim.keymap.set('n', '<leader>fk', builtin.keymaps, {})
+            end, { desc = "telescope grep through ~/doc/mydocs" })
+            vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "telescope find buffers" })
+            vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "telescope find tags" })
+            vim.keymap.set('n', '<leader>fs', builtin.lsp_dynamic_workspace_symbols, { desc = "telescope find workspace symbols" })
+            vim.keymap.set('n', '<leader>fc', builtin.commands, { desc = "telescope find commands" })
+            vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = "telescope find keymaps" })
         end
     },
 
