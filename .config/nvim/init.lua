@@ -418,6 +418,10 @@ require("lazy").setup({
         ---@module 'oil'
         ---@type oil.SetupOpts
         opts = {
+            view_options = {
+                -- Show files and directories that start with "."
+                show_hidden = true,
+            },
             git = {
                 -- Return true to automatically git add/mv/rm files
                 add = function(path)
