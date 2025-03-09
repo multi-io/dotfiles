@@ -61,6 +61,26 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- concatenate arrays
+local function concat(...)
+    local res = {}
+    for _, arr in pairs({...}) do
+        for _,v in pairs(arr) do
+            table.insert(res, v)
+        end
+    end
+    return res
+end
+
+-- create a no-args function that calls fn with some args
+local function fn_with_args(fn, ...)
+    local args = { ... }
+    local arg_count = select("#", ...)
+    return function()
+        return fn(unpack(args, 1, arg_count))
+    end
+end
+
 require("lazy").setup({
 
     {
@@ -140,12 +160,18 @@ require("lazy").setup({
                     }
                 }
             })
+
+            local vimgrep_std_args = require("telescope.config").values.vimgrep_arguments
+
             local builtin = require('telescope.builtin')
             vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "telescope find files" })
-            vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "telescope grep" })
-            vim.keymap.set('n', '<leader>fd', function()
-                builtin.live_grep { search_dirs = {vim.env.HOME .. "/doc/mydocs"} }
-            end, { desc = "telescope grep through ~/doc/mydocs" })
+            vim.keymap.set('n', '<leader>fg',
+                fn_with_args(builtin.live_grep, { vimgrep_arguments = concat(vimgrep_std_args, {"--hidden", "--no-ignore"}) }),
+                { desc = "telescope grep" })
+            vim.keymap.set('n', '<leader>fi', builtin.live_grep, { desc = "telescope git grep" })
+            vim.keymap.set('n', '<leader>fd',
+                fn_with_args(builtin.live_grep, { search_dirs = {vim.env.HOME .. "/doc/mydocs"} }),
+                { desc = "telescope grep through ~/doc/mydocs" })
             vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "telescope find buffers" })
             vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "telescope find tags" })
             vim.keymap.set('n', '<leader>fs', builtin.lsp_dynamic_workspace_symbols, { desc = "telescope find workspace symbols" })
